@@ -305,6 +305,134 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
+        /* Animations */
+        .animate-fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .animate-slide-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .animate-slide-in {
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Outbound Feed Styles */
+        .outbound-feed {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .outbound-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.5s ease;
+            transition: all 0.3s ease;
+        }
+
+        .outbound-item:last-child {
+            border-bottom: none;
+        }
+
+        .outbound-item.success {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 3px solid #22c55e;
+        }
+
+        .outbound-item.busy {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 3px solid #f59e0b;
+        }
+
+        .outbound-item.no-answer {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid #ef4444;
+        }
+
+        .outbound-item.calling {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3b82f6;
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% {
+                border-left-color: #3b82f6;
+            }
+            50% {
+                border-left-color: #60a5fa;
+            }
+        }
+
+        .outbound-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .outbound-status.success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .outbound-status.busy {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .outbound-status.no-answer {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .outbound-status.calling {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .conversation-details {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-container {
@@ -526,6 +654,135 @@
             });
         }
 
+        // Outbound Animations
+        function startOutboundAnimations() {
+            const outboundCalls = [
+                {
+                    name: 'Anna Weber',
+                    phone: '+49 30 1234567',
+                    status: 'calling',
+                    statusText: 'Anruf läuft',
+                    conversation: null,
+                    icon: '📞'
+                },
+                {
+                    name: 'Klaus Richter',
+                    phone: '+49 160 9876543',
+                    status: 'success',
+                    statusText: 'Termin bestätigt',
+                    conversation: 'Termin für Donnerstag 14:30 bestätigt. Patient freut sich auf den Termin.',
+                    icon: '✅'
+                },
+                {
+                    name: 'Maria Schmidt',
+                    phone: '+49 221 5554321',
+                    status: 'busy',
+                    statusText: 'Besetzt',
+                    conversation: 'Mailbox erreicht. Rückruf in 30 Minuten geplant.',
+                    icon: '📵'
+                },
+                {
+                    name: 'Thomas Klein',
+                    phone: '+49 89 7778888',
+                    status: 'no-answer',
+                    statusText: 'Nicht erreicht',
+                    conversation: 'Kein Anschluss unter dieser Nummer. Alternative Nummer wird gesucht.',
+                    icon: '❌'
+                },
+                {
+                    name: 'Sarah Becker',
+                    phone: '+49 40 3332222',
+                    status: 'success',
+                    statusText: 'Termin verschoben',
+                    conversation: 'Termin von Dienstag auf Freitag 10:00 verschoben. Bestätigung erhalten.',
+                    icon: '📅'
+                },
+                {
+                    name: 'Michael Wagner',
+                    phone: '+49 711 9998877',
+                    status: 'calling',
+                    statusText: 'Verbindung wird aufgebaut',
+                    conversation: null,
+                    icon: '📞'
+                }
+            ];
+
+            const feed = document.getElementById('outboundFeed');
+            if (!feed) return;
+
+            // Füge Anrufe mit zeitlichen Abständen hinzu
+            outboundCalls.forEach((call, index) => {
+                setTimeout(() => {
+                    addOutboundCall(call, feed);
+                }, index * 800); // 800ms Abstand zwischen Anrufen
+            });
+
+            // Simuliere Status-Updates
+            setTimeout(() => {
+                updateCallStatus();
+            }, 5000);
+        }
+
+        function addOutboundCall(call, feed) {
+            const item = document.createElement('div');
+            item.className = `outbound-item ${call.status}`;
+            item.innerHTML = `
+                <div class="activity-icon ${call.status}">${call.icon}</div>
+                <div class="activity-content">
+                    <div class="activity-title">${call.name}</div>
+                    <div class="activity-subtitle">${call.phone}</div>
+                    ${call.conversation ? `<div class="conversation-details">"${call.conversation}"</div>` : ''}
+                </div>
+                <div class="outbound-status ${call.status}">${call.statusText}</div>
+            `;
+            
+            feed.appendChild(item);
+
+            // Entferne alte Items (max 8)
+            while (feed.children.length > 8) {
+                feed.removeChild(feed.firstChild);
+            }
+        }
+
+        function updateCallStatus() {
+            const callingItems = document.querySelectorAll('.outbound-item.calling');
+            callingItems.forEach((item, index) => {
+                setTimeout(() => {
+                    const outcomes = [
+                        {
+                            status: 'success',
+                            statusText: 'Termin bestätigt',
+                            conversation: 'Termin für morgen 15:30 bestätigt. Patient ist informiert.',
+                            icon: '✅'
+                        },
+                        {
+                            status: 'busy',
+                            statusText: 'Besetzt',
+                            conversation: 'Mailbox erreicht. Automatischer Rückruf in 1 Stunde.',
+                            icon: '📵'
+                        }
+                    ];
+                    
+                    const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+                    
+                    // Update Status
+                    item.className = `outbound-item ${outcome.status}`;
+                    item.querySelector('.activity-icon').textContent = outcome.icon;
+                    item.querySelector('.outbound-status').textContent = outcome.statusText;
+                    item.querySelector('.outbound-status').className = `outbound-status ${outcome.status}`;
+                    
+                    // Füge Gesprächsdetails hinzu
+                    const content = item.querySelector('.activity-content');
+                    if (!content.querySelector('.conversation-details')) {
+                        const details = document.createElement('div');
+                        details.className = 'conversation-details';
+                        details.textContent = `"${outcome.conversation}"`;
+                        content.appendChild(details);
+                    }
+                }, index * 2000);
+            });
+        }
+
         // Start live updates
         setInterval(addActivity, 8000); // New activity every 8 seconds
         setInterval(updateStats, 12000); // Update stats every 12 seconds
@@ -634,41 +891,48 @@
                 `;
             } else if (page === 'outbound') {
                 main.innerHTML = `
-                    <section class="hero">
+                    <section class="hero animate-fade-in">
                         <h1>Outbound Kampagnen</h1>
                         <p>Proaktive Patientenkommunikation für Termine, Erinnerungen und Follow-ups</p>
                     </section>
 
                     <section class="stats-grid">
-                        <div class="stat-card">
+                        <div class="stat-card animate-slide-up" style="animation-delay: 0.1s">
                             <div class="stat-number">156</div>
                             <div class="stat-label">Heute kontaktiert</div>
                             <div class="stat-change">+23% vs. gestern</div>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card animate-slide-up" style="animation-delay: 0.2s">
                             <div class="stat-number">89%</div>
                             <div class="stat-label">Erreichbarkeitsrate</div>
                             <div class="stat-change">+5% diese Woche</div>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card animate-slide-up" style="animation-delay: 0.3s">
                             <div class="stat-number">42</div>
                             <div class="stat-label">Termine bestätigt</div>
                             <div class="stat-change">+12 heute</div>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card animate-slide-up" style="animation-delay: 0.4s">
                             <div class="stat-number">8</div>
                             <div class="stat-label">Aktive Kampagnen</div>
                             <div class="stat-change">3 geplant</div>
                         </div>
                     </section>
 
-                    <section class="live-section">
+                    <section class="live-section animate-fade-in" style="animation-delay: 0.6s">
                         <h2 class="section-title">
                             <span class="live-indicator"></span>
-                            Aktive Outbound Kampagnen
+                            Live Outbound Anrufe
                         </h2>
+                        <div class="outbound-feed" id="outboundFeed">
+                            <!-- Wird dynamisch gefüllt -->
+                        </div>
+                    </section>
+
+                    <section class="live-section animate-fade-in" style="animation-delay: 0.8s">
+                        <h2 class="section-title">Aktive Kampagnen</h2>
                         <div class="activity-feed">
-                            <div class="activity-item">
+                            <div class="activity-item animate-slide-in" style="animation-delay: 1.0s">
                                 <div class="activity-icon scheduling">📅</div>
                                 <div class="activity-content">
                                     <div class="activity-title">Terminerinnerungen</div>
@@ -676,7 +940,7 @@
                                 </div>
                                 <div class="activity-time">läuft</div>
                             </div>
-                            <div class="activity-item">
+                            <div class="activity-item animate-slide-in" style="animation-delay: 1.2s">
                                 <div class="activity-icon calling">📞</div>
                                 <div class="activity-content">
                                     <div class="activity-title">Nachsorge Follow-up</div>
@@ -684,7 +948,7 @@
                                 </div>
                                 <div class="activity-time">läuft</div>
                             </div>
-                            <div class="activity-item">
+                            <div class="activity-item animate-slide-in" style="animation-delay: 1.4s">
                                 <div class="activity-icon waiting">⏳</div>
                                 <div class="activity-content">
                                     <div class="activity-title">Vorsorgeuntersuchungen</div>
@@ -695,6 +959,11 @@
                         </div>
                     </section>
                 `;
+                
+                // Starte Outbound-Animationen
+                setTimeout(() => {
+                    startOutboundAnimations();
+                }, 1600);
             } else if (page === 'customization') {
                 main.innerHTML = `
                     <section class="hero">
