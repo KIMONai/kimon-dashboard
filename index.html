@@ -1206,7 +1206,7 @@
                                     <svg viewBox="0 0 42 42" class="donut">
                                         <circle class="donut-hole" cx="21" cy="21" r="15.915" fill="transparent"></circle>
                                         <circle class="donut-ring" cx="21" cy="21" r="15.915" fill="transparent" stroke="#333" stroke-width="3"></circle>
-                                        <circle class="donut-segment" cx="21" cy="21" r="15.915" fill="transparent" stroke="#00ff88" stroke-width="3" stroke-dasharray="0 100" stroke-dashoffset="25"></circle>
+                                        <circle class="donut-segment" cx="21" cy="21" r="15.915" fill="transparent" stroke="#00ff88" stroke-width="3" stroke-dasharray="0 100" stroke-dashoffset="0"></circle>
                                     </svg>
                                     <div class="pie-center">
                                         <span class="pie-percentage">89%</span>
@@ -1666,7 +1666,17 @@
                     const circle = pieChart.querySelector('.donut-segment');
                     const circumference = 2 * Math.PI * 15.915;
                     const strokeDasharray = (percentage / 100) * circumference;
-                    circle.style.strokeDasharray = `${strokeDasharray} ${circumference}`;
+                    const strokeDashoffset = circumference - strokeDasharray;
+                    
+                    // Setze initial auf 0 (unsichtbar)
+                    circle.style.strokeDasharray = `0 ${circumference}`;
+                    circle.style.strokeDashoffset = '0';
+                    
+                    // Animiere zum Zielwert
+                    setTimeout(() => {
+                        circle.style.strokeDasharray = `${strokeDasharray} ${circumference}`;
+                        circle.style.transition = 'stroke-dasharray 2s ease-in-out';
+                    }, 100);
                 }
             }, 500);
 
