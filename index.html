@@ -658,6 +658,85 @@
             return phoneNumber;
         }
 
+        // Animated counter function
+        function animateCounter(element, targetValue, duration = 2000) {
+            const startValue = 0;
+            const startTime = performance.now();
+            
+            // Extract number from target (handle percentages, currency, etc.)
+            let numericTarget = targetValue;
+            let prefix = '';
+            let suffix = '';
+            
+            if (typeof targetValue === 'string') {
+                // Handle percentages
+                if (targetValue.includes('%')) {
+                    numericTarget = parseFloat(targetValue.replace('%', ''));
+                    suffix = '%';
+                }
+                // Handle currency
+                else if (targetValue.includes('€')) {
+                    numericTarget = parseFloat(targetValue.replace('€', '').replace(',', ''));
+                    prefix = '€';
+                }
+                // Handle time values like "1.8s"
+                else if (targetValue.includes('s')) {
+                    numericTarget = parseFloat(targetValue.replace('s', ''));
+                    suffix = 's';
+                }
+                // Handle comma-separated numbers
+                else if (targetValue.includes(',')) {
+                    numericTarget = parseFloat(targetValue.replace(',', ''));
+                }
+                // Handle regular numbers
+                else {
+                    numericTarget = parseFloat(targetValue) || 0;
+                }
+            }
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentValue = startValue + (numericTarget - startValue) * easeOutQuart;
+                
+                // Format the number based on original format
+                let displayValue;
+                if (numericTarget >= 1000) {
+                    displayValue = Math.floor(currentValue).toLocaleString('de-DE');
+                } else if (suffix === 's' || suffix === '%') {
+                    displayValue = currentValue.toFixed(1);
+                } else {
+                    displayValue = Math.floor(currentValue);
+                }
+                
+                element.textContent = prefix + displayValue + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Animate all stat numbers on page load or change
+        function animateAllStats() {
+            setTimeout(() => {
+                document.querySelectorAll('.stat-number').forEach((element, index) => {
+                    const targetValue = element.getAttribute('data-target') || element.textContent;
+                    element.setAttribute('data-target', targetValue);
+                    element.textContent = '0';
+                    
+                    setTimeout(() => {
+                        animateCounter(element, targetValue, 2000);
+                    }, index * 200); // Stagger animations
+                });
+            }, 300);
+        }
+
         function updateStats() {
             // Simulate live stat updates
             const stats = {
@@ -821,6 +900,9 @@
         setInterval(updateStats, 12000); // Update stats every 12 seconds
         setInterval(updateTimeStamps, 60000); // Update timestamps every minute
         
+        // Animate stats on initial page load
+        animateAllStats();
+        
         // Check if Outbound is active on page load
         document.addEventListener('DOMContentLoaded', () => {
             const activeNav = document.querySelector('.nav-item.active');
@@ -956,6 +1038,9 @@
                         </div>
                     </section>
                 `;
+                
+                // Animate stats
+                animateAllStats();
             } else if (page === 'outbound') {
                 main.innerHTML = `
                     <section class="hero animate-fade-in">
@@ -1017,6 +1102,9 @@
                         </div>
                     </section>
                 `;
+                
+                // Animate stats
+                animateAllStats();
                 
                 // Starte Outbound-Animationen
                 setTimeout(() => {
@@ -1082,6 +1170,9 @@
                         </div>
                     </section>
                 `;
+                
+                // Animate stats
+                animateAllStats();
             } else if (page === 'stats') {
                 main.innerHTML = `
                     <section class="hero">
@@ -1217,6 +1308,9 @@
                         </div>
                     </section>
                 `;
+                
+                // Animate stats
+                animateAllStats();
             }
         }
     </script>
