@@ -675,14 +675,15 @@
             ];
 
             const statusOptions = [
-                // Mehr erfolgreiche Anrufe (70% grün)
-                { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Termin für morgen 14:30 bestätigt. Patient freut sich.' },
+                // Mehr erfolgreiche Anrufe (70% grün) - viele "Termin neu belegt"
+                { status: 'success', statusText: 'Termin neu belegt', icon: '✓', conversation: 'Freigewordener Slot heute 14:30 erfolgreich neu vergeben.' },
+                { status: 'success', statusText: 'Termin neu belegt', icon: '✓', conversation: 'Abgesagter Termin morgen 16:00 sofort neu besetzt.' },
+                { status: 'success', statusText: 'Termin neu belegt', icon: '✓', conversation: 'Kurzfristig freier Slot Donnerstag 11:15 vergeben.' },
+                { status: 'success', statusText: 'Termin neu belegt', icon: '✓', conversation: 'Wartender Patient für heute 15:45 eingeteilt.' },
                 { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Termin für Donnerstag 16:00 bestätigt. Alles geklärt.' },
                 { status: 'success', statusText: 'Termin verschoben', icon: '✓', conversation: 'Termin auf nächste Woche verschoben. Bestätigung erhalten.' },
                 { status: 'success', statusText: 'Rückruf vereinbart', icon: '✓', conversation: 'Patient ruft morgen um 10:00 zurück für Terminabsprache.' },
-                { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Kontrolltermin für Freitag 11:15 bestätigt.' },
-                { status: 'success', statusText: 'Erfolgreich kontaktiert', icon: '✓', conversation: 'Patient über Terminänderung informiert. Alles verstanden.' },
-                { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Nachuntersuchung für Montag 09:30 bestätigt.' },
+                { status: 'success', statusText: 'Termin neu belegt', icon: '✓', conversation: 'Freier Slot Freitag 09:30 an wartenden Patienten vergeben.' },
                 // Weniger laufende Anrufe (20%)
                 { status: 'calling', statusText: 'Anruf läuft', icon: '●', conversation: null },
                 { status: 'calling', statusText: 'Verbindung wird aufgebaut', icon: '●', conversation: null },
@@ -748,14 +749,20 @@
                     const outcomes = [
                         {
                             status: 'success',
-                            statusText: 'Termin bestätigt',
-                            conversation: 'Termin für morgen 15:30 bestätigt. Patient ist informiert.',
+                            statusText: 'Termin neu belegt',
+                            conversation: 'Freigewordener Slot heute 16:15 erfolgreich an wartenden Patienten vergeben.',
                             icon: '✓'
                         },
                         {
                             status: 'success',
-                            statusText: 'Erfolgreich kontaktiert',
-                            conversation: 'Patient über wichtige Informationen informiert. Alles verstanden.',
+                            statusText: 'Termin neu belegt',
+                            conversation: 'Kurzfristig abgesagter Termin morgen 10:45 sofort neu besetzt.',
+                            icon: '✓'
+                        },
+                        {
+                            status: 'success',
+                            statusText: 'Termin bestätigt',
+                            conversation: 'Termin für morgen 15:30 bestätigt. Patient ist informiert.',
                             icon: '✓'
                         },
                         {
@@ -933,31 +940,52 @@
                     </section>
 
                     <section class="live-section animate-fade-in" style="animation-delay: 0.8s">
-                        <h2 class="section-title">Aktive Kampagnen</h2>
-                        <div class="activity-feed">
-                            <div class="activity-item animate-slide-in" style="animation-delay: 1.0s">
-                                <div class="activity-icon scheduling">📅</div>
-                                <div class="activity-content">
-                                    <div class="activity-title">Terminerinnerungen</div>
-                                    <div class="activity-subtitle">47 Patienten • Morgen 09:00-17:00</div>
-                                </div>
-                                <div class="activity-time">läuft</div>
+                        <h2 class="section-title">Wochenstatistik - Abgesagte Termine neu vergeben</h2>
+                        <div class="stats-grid" style="grid-template-columns: repeat(7, 1fr); gap: 1rem;">
+                            <div class="stat-card animate-slide-up" style="animation-delay: 1.0s">
+                                <div class="stat-number" style="font-size: 1.8rem;">23</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Montag</div>
+                                <div class="stat-change" style="font-size: 0.7rem;">+5 vs. Vorwoche</div>
                             </div>
-                            <div class="activity-item animate-slide-in" style="animation-delay: 1.2s">
-                                <div class="activity-icon calling">📞</div>
-                                <div class="activity-content">
-                                    <div class="activity-title">Nachsorge Follow-up</div>
-                                    <div class="activity-subtitle">23 Patienten • Post-OP Kontrolle</div>
-                                </div>
-                                <div class="activity-time">läuft</div>
+                            <div class="stat-card animate-slide-up" style="animation-delay: 1.1s">
+                                <div class="stat-number" style="font-size: 1.8rem;">31</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Dienstag</div>
+                                <div class="stat-change" style="font-size: 0.7rem;">+8 vs. Vorwoche</div>
                             </div>
-                            <div class="activity-item animate-slide-in" style="animation-delay: 1.4s">
-                                <div class="activity-icon waiting">⏳</div>
+                            <div class="stat-card animate-slide-up" style="animation-delay: 1.2s">
+                                <div class="stat-number" style="font-size: 1.8rem;">28</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Mittwoch</div>
+                                <div class="stat-change" style="font-size: 0.7rem;">+3 vs. Vorwoche</div>
+                            </div>
+                            <div class="stat-card animate-slide-up" style="animation-delay: 1.3s">
+                                <div class="stat-number" style="font-size: 1.8rem;">35</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Donnerstag</div>
+                                <div class="stat-change" style="font-size: 0.7rem;">+12 vs. Vorwoche</div>
+                            </div>
+                            <div class="stat-card animate-slide-up" style="animation-delay: 1.4s">
+                                <div class="stat-number" style="font-size: 1.8rem;">42</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Freitag</div>
+                                <div class="stat-change" style="font-size: 0.7rem;">+15 vs. Vorwoche</div>
+                            </div>
+                            <div class="stat-card animate-slide-up" style="animation-delay: 1.5s">
+                                <div class="stat-number" style="font-size: 1.8rem;">19</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Samstag</div>
+                                <div class="stat-change" style="font-size: 0.7rem;">+2 vs. Vorwoche</div>
+                            </div>
+                            <div class="stat-card animate-slide-up" style="animation-delay: 1.6s">
+                                <div class="stat-number" style="font-size: 1.8rem;">7</div>
+                                <div class="stat-label" style="font-size: 0.8rem;">Sonntag</div>
+                                <div class="stat-change" style="font-size: 0.7rem;">+1 vs. Vorwoche</div>
+                            </div>
+                        </div>
+                        <div class="activity-feed" style="margin-top: 2rem;">
+                            <div class="activity-item animate-slide-in" style="animation-delay: 1.8s">
+                                <div class="activity-icon success">✓</div>
                                 <div class="activity-content">
-                                    <div class="activity-title">Vorsorgeuntersuchungen</div>
-                                    <div class="activity-subtitle">89 Patienten • Jahres-Checkup</div>
+                                    <div class="activity-title">Wochensumme: 185 Termine neu vergeben</div>
+                                    <div class="activity-subtitle">+46 Termine vs. Vorwoche • 96% Erfolgsquote bei Neuvergabe</div>
                                 </div>
-                                <div class="activity-time">geplant 15:00</div>
+                                <div class="activity-time">diese Woche</div>
                             </div>
                         </div>
                     </section>
