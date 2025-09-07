@@ -1,0 +1,22 @@
+import { KimonClient, play } from "@kimon/telephony-js";
+
+const kimon = new KimonClient({ apiKey: process.env.KIMON_API_KEY });
+
+await kimon.narration.play({
+  locale: 'de-DE',
+  text: "Lernen Sie Kimon kennen. Eine Plattform, die ihre Praxis rund die Uhr am Laufen hält.",
+});
+
+// phonetic match → name
+// phonetic: [/ˈkiːmɔn/ → "Kimon"]
+
+await kimon.narration.play({
+  text: "Kimons künstliche Intelligenz erkennt Anrufer mit absoluter Treffsicherheit über phonetische Namenserkennung",
+});
+
+await kimon.narration.play({
+  text: "spricht in der Sprache des Patienten und vergibt Termine eigenständig.",
+});
+
+
+

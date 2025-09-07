@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimon Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            margin-right: 3rem;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            padding: 0.5rem 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Main Content */
+        .main {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            color: #4ade80;
+        }
+
+        /* Live Activity */
+        .live-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .activity-feed {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .activity-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.5s ease;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.calling {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .activity-icon.scheduling {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .activity-icon.waiting {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .activity-time {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .process-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+        }
+
+        .process-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.2rem;
+        }
+
+        .process-step.active .process-icon {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .process-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-subtitle {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-items {
+                gap: 1rem;
+            }
+
+            .main {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-flow {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .process-step:not(:last-child)::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">Kimon</div>
+            <div class="nav-items">
+                <a href="#" class="nav-item active">Dashboard</a>
+                <a href="#" class="nav-item">Outbound</a>
+                <a href="#" class="nav-item">Customization</a>
+                <a href="#" class="nav-item">Stats</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main">
+        <section class="hero">
+            <h1>Intelligente Terminverwaltung</h1>
+            <p>KI ruft automatisch wartende Patienten an, sobald ein Termin frei wird – nahtlos und effizient</p>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="activeCallsCount">3</div>
+                <div class="stat-label">Aktive Anrufe</div>
+                <div class="stat-change">+2 in letzten 5 Min</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="waitingPatientsCount">17</div>
+                <div class="stat-label">Wartende Patienten</div>
+                <div class="stat-change">-5 heute vermittelt</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="filledSlotsCount">12</div>
+                <div class="stat-label">Heute gefüllte Slots</div>
+                <div class="stat-change">+8 vs. gestern</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="successRateCount">94%</div>
+                <div class="stat-label">Erfolgsquote</div>
+                <div class="stat-change">+2% diese Woche</div>
+            </div>
+        </section>
+
+        <section class="process-flow">
+            <div class="process-step active">
+                <div class="process-icon">📅</div>
+                <div class="process-title">Absage erkannt</div>
+                <div class="process-subtitle">Termin wird frei</div>
+            </div>
+            <div class="process-step active">
+                <div class="process-icon">🔍</div>
+                <div class="process-title">Patient gefunden</div>
+                <div class="process-subtitle">Warteliste durchsucht</div>
+            </div>
+            <div class="process-step active">
+                <div class="process-icon">📞</div>
+                <div class="process-title">Anruf läuft</div>
+                <div class="process-subtitle">KI kontaktiert Patient</div>
+            </div>
+            <div class="process-step">
+                <div class="process-icon">✅</div>
+                <div class="process-title">Termin bestätigt</div>
+                <div class="process-subtitle">Slot erfolgreich gefüllt</div>
+            </div>
+        </section>
+
+        <section class="live-section">
+            <h2 class="section-title">
+                <span class="live-indicator"></span>
+                Live Activity
+            </h2>
+            <div class="activity-feed" id="activityFeed">
+                <div class="activity-item">
+                    <div class="activity-icon calling">📞</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Anna Weber wird angerufen</div>
+                        <div class="activity-subtitle">Freier Slot: Heute 14:30 • Dr. Müller</div>
+                    </div>
+                    <div class="activity-time">vor 12s</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon scheduling">📅</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Termin bestätigt</div>
+                        <div class="activity-subtitle">Klaus Richter • Morgen 09:15</div>
+                    </div>
+                    <div class="activity-time">vor 1m</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon waiting">⏳</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Neuer Patient auf Warteliste</div>
+                        <div class="activity-subtitle">Maria Schmidt • Präferenz: Nachmittags</div>
+                    </div>
+                    <div class="activity-time">vor 3m</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon calling">📞</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Erfolgreich vermittelt</div>
+                        <div class="activity-subtitle">Thomas Klein • Heute 16:00 bestätigt</div>
+                    </div>
+                    <div class="activity-time">vor 7m</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Live Updates Simulation
+        const activities = [
+            {
+                icon: 'calling',
+                emoji: '📞',
+                title: 'Neuer Anruf gestartet',
+                subtitle: 'Patient: Sarah Becker • Slot: Heute 15:45'
+            },
+            {
+                icon: 'scheduling',
+                emoji: '📅',
+                title: 'Termin erfolgreich gebucht',
+                subtitle: 'Michael Wagner • Morgen 11:30'
+            },
+            {
+                icon: 'waiting',
+                emoji: '⏳',
+                title: 'Patient zur Warteliste hinzugefügt',
+                subtitle: 'Lisa Hoffmann • Bevorzugt: Vormittags'
+            },
+            {
+                icon: 'calling',
+                emoji: '📞',
+                title: 'Rückruf erfolgreich',
+                subtitle: 'Peter Schulz hat Termin bestätigt'
+            }
+        ];
+
+        function addActivity() {
+            const feed = document.getElementById('activityFeed');
+            const activity = activities[Math.floor(Math.random() * activities.length)];
+            
+            const item = document.createElement('div');
+            item.className = 'activity-item';
+            item.innerHTML = `
+                <div class="activity-icon ${activity.icon}">${activity.emoji}</div>
+                <div class="activity-content">
+                    <div class="activity-title">${activity.title}</div>
+                    <div class="activity-subtitle">${activity.subtitle}</div>
+                </div>
+                <div class="activity-time">gerade eben</div>
+            `;
+            
+            feed.insertBefore(item, feed.firstChild);
+            
+            // Remove old items (keep max 6)
+            while (feed.children.length > 6) {
+                feed.removeChild(feed.lastChild);
+            }
+            
+            // Update time stamps
+            updateTimeStamps();
+        }
+
+        function updateTimeStamps() {
+            const items = document.querySelectorAll('.activity-time');
+            items.forEach((item, index) => {
+                const times = ['gerade eben', 'vor 1m', 'vor 3m', 'vor 5m', 'vor 8m', 'vor 12m'];
+                if (times[index]) {
+                    item.textContent = times[index];
+                }
+            });
+        }
+
+        function updateStats() {
+            // Simulate live stat updates
+            const stats = {
+                activeCallsCount: Math.floor(Math.random() * 5) + 1,
+                waitingPatientsCount: Math.floor(Math.random() * 10) + 15,
+                filledSlotsCount: Math.floor(Math.random() * 5) + 10,
+            };
+            
+            Object.keys(stats).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = stats[key];
+                }
+            });
+        }
+
+        // Start live updates
+        setInterval(addActivity, 8000); // New activity every 8 seconds
+        setInterval(updateStats, 12000); // Update stats every 12 seconds
+        setInterval(updateTimeStamps, 60000); // Update timestamps every minute
+
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
