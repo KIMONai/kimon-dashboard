@@ -838,8 +838,8 @@
             
             feed.appendChild(item);
 
-            // Entferne alte Items (max 12 für bessere Übersicht)
-            while (feed.children.length > 12) {
+            // Entferne alte Items (max 3 Anrufe gleichzeitig)
+            while (feed.children.length > 3) {
                 feed.removeChild(feed.firstChild);
             }
         }
