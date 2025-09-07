@@ -675,14 +675,20 @@
             ];
 
             const statusOptions = [
-                { status: 'calling', statusText: 'Anruf läuft', icon: '📞', conversation: null },
-                { status: 'calling', statusText: 'Verbindung wird aufgebaut', icon: '📞', conversation: null },
-                { status: 'success', statusText: 'Termin bestätigt', icon: '✅', conversation: 'Termin für morgen 14:30 bestätigt. Patient freut sich.' },
-                { status: 'success', statusText: 'Termin verschoben', icon: '📅', conversation: 'Termin auf nächste Woche verschoben. Bestätigung erhalten.' },
-                { status: 'success', statusText: 'Rückruf vereinbart', icon: '🔄', conversation: 'Patient ruft morgen um 10:00 zurück für Terminabsprache.' },
-                { status: 'busy', statusText: 'Besetzt', icon: '📵', conversation: 'Mailbox erreicht. Automatischer Rückruf in 1 Stunde.' },
-                { status: 'busy', statusText: 'Mailbox', icon: '📧', conversation: 'Nachricht hinterlassen. Patient wird zurückrufen.' },
-                { status: 'no-answer', statusText: 'Nicht erreicht', icon: '❌', conversation: 'Kein Anschluss. Alternative Nummer wird gesucht.' }
+                // Mehr erfolgreiche Anrufe (70% grün)
+                { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Termin für morgen 14:30 bestätigt. Patient freut sich.' },
+                { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Termin für Donnerstag 16:00 bestätigt. Alles geklärt.' },
+                { status: 'success', statusText: 'Termin verschoben', icon: '✓', conversation: 'Termin auf nächste Woche verschoben. Bestätigung erhalten.' },
+                { status: 'success', statusText: 'Rückruf vereinbart', icon: '✓', conversation: 'Patient ruft morgen um 10:00 zurück für Terminabsprache.' },
+                { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Kontrolltermin für Freitag 11:15 bestätigt.' },
+                { status: 'success', statusText: 'Erfolgreich kontaktiert', icon: '✓', conversation: 'Patient über Terminänderung informiert. Alles verstanden.' },
+                { status: 'success', statusText: 'Termin bestätigt', icon: '✓', conversation: 'Nachuntersuchung für Montag 09:30 bestätigt.' },
+                // Weniger laufende Anrufe (20%)
+                { status: 'calling', statusText: 'Anruf läuft', icon: '●', conversation: null },
+                { status: 'calling', statusText: 'Verbindung wird aufgebaut', icon: '●', conversation: null },
+                // Weniger problematische Anrufe (10%)
+                { status: 'busy', statusText: 'Besetzt', icon: '◐', conversation: 'Mailbox erreicht. Automatischer Rückruf in 1 Stunde.' },
+                { status: 'busy', statusText: 'Mailbox', icon: '◐', conversation: 'Nachricht hinterlassen. Patient wird zurückrufen.' }
             ];
 
             const outboundCalls = [];
@@ -744,13 +750,19 @@
                             status: 'success',
                             statusText: 'Termin bestätigt',
                             conversation: 'Termin für morgen 15:30 bestätigt. Patient ist informiert.',
-                            icon: '✅'
+                            icon: '✓'
+                        },
+                        {
+                            status: 'success',
+                            statusText: 'Erfolgreich kontaktiert',
+                            conversation: 'Patient über wichtige Informationen informiert. Alles verstanden.',
+                            icon: '✓'
                         },
                         {
                             status: 'busy',
                             statusText: 'Besetzt',
                             conversation: 'Mailbox erreicht. Automatischer Rückruf in 1 Stunde.',
-                            icon: '📵'
+                            icon: '◐'
                         }
                     ];
                     
