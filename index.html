@@ -518,36 +518,44 @@
             margin-top: 0.5rem;
         }
 
-        /* Balkendiagramm */
-        .bar-chart {
+        /* Doughnut Chart */
+        .doughnut-chart {
             display: flex;
-            align-items: end;
-            justify-content: space-between;
-            height: 200px;
+            align-items: center;
+            gap: 2rem;
             width: 100%;
-            gap: 1rem;
         }
 
-        .bar-item {
+        .doughnut-svg {
+            width: 180px;
+            height: 180px;
+            transform: rotate(-90deg);
+        }
+
+        .doughnut-segment {
+            transition: stroke-dasharray 2s ease-in-out;
+        }
+
+        .doughnut-legend {
+            flex: 1;
             display: flex;
             flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
             align-items: center;
-            flex: 1;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .bar {
-            width: 100%;
-            background: linear-gradient(to top, #00ff88, #00cc6a);
-            border-radius: 4px 4px 0 0;
-            transition: height 1.5s ease-in-out;
-            min-height: 8px;
-            height: 0%;
-        }
-
-        .bar-label {
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
         }
 
         /* Sprachendiagramm */
@@ -1216,38 +1224,50 @@
                             </div>
                         </div>
 
-                        <!-- Anrufe pro Stunde Balkendiagramm -->
+                        <!-- Anruftypen Verteilung -->
                         <div class="chart-card animate-slide-up" style="animation-delay: 0.2s">
-                            <h3 class="chart-title">Anrufe pro Stunde (heute)</h3>
+                            <h3 class="chart-title">Anruftypen Verteilung</h3>
                             <div class="chart-container">
-                                <div class="bar-chart">
-                                    <div class="bar-item">
-                                        <div class="bar" data-height="45"></div>
-                                        <span class="bar-label">08:00</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <div class="bar" data-height="78"></div>
-                                        <span class="bar-label">09:00</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <div class="bar" data-height="92"></div>
-                                        <span class="bar-label">10:00</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <div class="bar" data-height="67"></div>
-                                        <span class="bar-label">11:00</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <div class="bar" data-height="89"></div>
-                                        <span class="bar-label">12:00</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <div class="bar" data-height="34"></div>
-                                        <span class="bar-label">13:00</span>
-                                    </div>
-                                    <div class="bar-item">
-                                        <div class="bar" data-height="76"></div>
-                                        <span class="bar-label">14:00</span>
+                                <div class="doughnut-chart">
+                                    <svg viewBox="0 0 42 42" class="doughnut-svg">
+                                        <!-- Terminbuchungen (45%) -->
+                                        <circle class="doughnut-segment" cx="21" cy="21" r="15.915" fill="transparent" 
+                                                stroke="#00ff88" stroke-width="4" 
+                                                stroke-dasharray="0 100" stroke-dashoffset="25" 
+                                                data-percentage="45" data-delay="0"></circle>
+                                        <!-- Absagen (25%) -->
+                                        <circle class="doughnut-segment" cx="21" cy="21" r="15.915" fill="transparent" 
+                                                stroke="#ff6b6b" stroke-width="4" 
+                                                stroke-dasharray="0 100" stroke-dashoffset="25"
+                                                data-percentage="25" data-delay="500"></circle>
+                                        <!-- Nachfragen (20%) -->
+                                        <circle class="doughnut-segment" cx="21" cy="21" r="15.915" fill="transparent" 
+                                                stroke="#4ecdc4" stroke-width="4" 
+                                                stroke-dasharray="0 100" stroke-dashoffset="25"
+                                                data-percentage="20" data-delay="1000"></circle>
+                                        <!-- Sonstiges (10%) -->
+                                        <circle class="doughnut-segment" cx="21" cy="21" r="15.915" fill="transparent" 
+                                                stroke="#ffd93d" stroke-width="4" 
+                                                stroke-dasharray="0 100" stroke-dashoffset="25"
+                                                data-percentage="10" data-delay="1500"></circle>
+                                    </svg>
+                                    <div class="doughnut-legend">
+                                        <div class="legend-item">
+                                            <div class="legend-color" style="background: #00ff88;"></div>
+                                            <span>Terminbuchungen (45%)</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-color" style="background: #ff6b6b;"></div>
+                                            <span>Absagen (25%)</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-color" style="background: #4ecdc4;"></div>
+                                            <span>Nachfragen (20%)</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-color" style="background: #ffd93d;"></div>
+                                            <span>Sonstiges (10%)</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1680,29 +1700,35 @@
                 }
             }, 500);
 
-            // Balkendiagramm Animation - Komplett neu
+            // Doughnut Chart Animation
             setTimeout(() => {
-                const barChart = document.querySelector('.bar-chart');
-                if (barChart) {
-                    const bars = barChart.querySelectorAll('.bar[data-height]');
-                    console.log('Found bars in bar-chart:', bars.length); // Debug
+                const doughnutChart = document.querySelector('.doughnut-chart');
+                if (doughnutChart) {
+                    const segments = doughnutChart.querySelectorAll('.doughnut-segment[data-percentage]');
+                    console.log('Found doughnut segments:', segments.length); // Debug
                     
-                    // Setze alle Balken initial auf 0%
-                    bars.forEach((bar) => {
-                        bar.style.height = '0%';
-                        bar.style.transition = 'height 1.5s ease-in-out';
-                    });
+                    let currentOffset = 0;
                     
-                    // Animiere jeden Balken nacheinander
-                    bars.forEach((bar, index) => {
+                    segments.forEach((segment, index) => {
+                        const percentage = parseFloat(segment.getAttribute('data-percentage'));
+                        const delay = parseInt(segment.getAttribute('data-delay'));
+                        const circumference = 2 * Math.PI * 15.915;
+                        const strokeDasharray = (percentage / 100) * circumference;
+                        
+                        // Setze initial auf unsichtbar
+                        segment.style.strokeDasharray = `0 ${circumference}`;
+                        segment.style.strokeDashoffset = -currentOffset;
+                        
+                        // Animiere nach Verzögerung
                         setTimeout(() => {
-                            const height = bar.getAttribute('data-height');
-                            console.log(`Animating bar ${index}: ${height}%`); // Debug
-                            bar.style.height = height + '%';
-                        }, index * 200);
+                            segment.style.strokeDasharray = `${strokeDasharray} ${circumference}`;
+                            console.log(`Animating doughnut segment ${index}: ${percentage}%`); // Debug
+                        }, delay);
+                        
+                        currentOffset += strokeDasharray;
                     });
                 }
-            }, 1200);
+            }, 1000);
 
             // Sprachendiagramm Animation
             setTimeout(() => {
