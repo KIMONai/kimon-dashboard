@@ -539,8 +539,9 @@
             width: 100%;
             background: linear-gradient(to top, #00ff88, #00cc6a);
             border-radius: 4px 4px 0 0;
-            transition: height 2s ease-in-out;
+            transition: height 1.5s ease-in-out;
             min-height: 2px;
+            height: 0%;
         }
 
         .bar-label {
@@ -1338,7 +1339,7 @@
                                     <div class="metric-item">
                                         <div class="metric-value" data-target="1247">0</div>
                                         <div class="metric-unit"></div>
-                                        <div class="metric-label">Anrufe heute</div>
+                                        <div class="metric-label">Anrufer insgesamt</div>
                                     </div>
                                 </div>
                             </div>
@@ -1669,14 +1670,16 @@
 
             // Balkendiagramm Animation
             setTimeout(() => {
-                const bars = document.querySelectorAll('.bar');
+                const bars = document.querySelectorAll('.bar[data-height]');
+                console.log('Found bars:', bars.length); // Debug
                 bars.forEach((bar, index) => {
                     setTimeout(() => {
-                        const height = bar.dataset.height;
+                        const height = bar.getAttribute('data-height');
+                        console.log(`Animating bar ${index}: ${height}%`); // Debug
                         bar.style.height = height + '%';
-                    }, index * 200);
+                    }, index * 150);
                 });
-            }, 800);
+            }, 1000);
 
             // Sprachendiagramm Animation
             setTimeout(() => {
