@@ -537,8 +537,286 @@
                 e.preventDefault();
                 document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
                 item.classList.add('active');
+                
+                const page = item.textContent.toLowerCase();
+                showPage(page);
             });
         });
+
+        function showPage(page) {
+            const main = document.querySelector('.main');
+            
+            if (page === 'dashboard') {
+                main.innerHTML = `
+                    <section class="hero">
+                        <h1>Intelligente Terminverwaltung</h1>
+                        <p>KI ruft automatisch wartende Patienten an, sobald ein Termin frei wird – nahtlos und effizient</p>
+                    </section>
+
+                    <section class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="activeCallsCount">3</div>
+                            <div class="stat-label">Aktive Anrufe</div>
+                            <div class="stat-change">+2 in letzten 5 Min</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="waitingPatientsCount">17</div>
+                            <div class="stat-label">Wartende Patienten</div>
+                            <div class="stat-change">-5 heute vermittelt</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="filledSlotsCount">12</div>
+                            <div class="stat-label">Heute gefüllte Slots</div>
+                            <div class="stat-change">+8 vs. gestern</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="successRateCount">94%</div>
+                            <div class="stat-label">Erfolgsquote</div>
+                            <div class="stat-change">+2% diese Woche</div>
+                        </div>
+                    </section>
+
+                    <section class="process-flow">
+                        <div class="process-step active">
+                            <div class="process-icon">📅</div>
+                            <div class="process-title">Absage erkannt</div>
+                            <div class="process-subtitle">Termin wird frei</div>
+                        </div>
+                        <div class="process-step active">
+                            <div class="process-icon">🔍</div>
+                            <div class="process-title">Patient gefunden</div>
+                            <div class="process-subtitle">Warteliste durchsucht</div>
+                        </div>
+                        <div class="process-step active">
+                            <div class="process-icon">📞</div>
+                            <div class="process-title">Anruf läuft</div>
+                            <div class="process-subtitle">KI kontaktiert Patient</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="process-icon">✅</div>
+                            <div class="process-title">Termin bestätigt</div>
+                            <div class="process-subtitle">Slot erfolgreich gefüllt</div>
+                        </div>
+                    </section>
+
+                    <section class="live-section">
+                        <h2 class="section-title">
+                            <span class="live-indicator"></span>
+                            Live Activity
+                        </h2>
+                        <div class="activity-feed" id="activityFeed">
+                            <div class="activity-item">
+                                <div class="activity-icon calling">📞</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Anna Weber wird angerufen</div>
+                                    <div class="activity-subtitle">Freier Slot: Heute 14:30 • Dr. Müller</div>
+                                </div>
+                                <div class="activity-time">vor 12s</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon scheduling">📅</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Termin bestätigt</div>
+                                    <div class="activity-subtitle">Klaus Richter • Morgen 09:15</div>
+                                </div>
+                                <div class="activity-time">vor 1m</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon waiting">⏳</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Neuer Patient auf Warteliste</div>
+                                    <div class="activity-subtitle">Maria Schmidt • Präferenz: Nachmittags</div>
+                                </div>
+                                <div class="activity-time">vor 3m</div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            } else if (page === 'outbound') {
+                main.innerHTML = `
+                    <section class="hero">
+                        <h1>Outbound Kampagnen</h1>
+                        <p>Proaktive Patientenkommunikation für Termine, Erinnerungen und Follow-ups</p>
+                    </section>
+
+                    <section class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Heute kontaktiert</div>
+                            <div class="stat-change">+23% vs. gestern</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">89%</div>
+                            <div class="stat-label">Erreichbarkeitsrate</div>
+                            <div class="stat-change">+5% diese Woche</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">42</div>
+                            <div class="stat-label">Termine bestätigt</div>
+                            <div class="stat-change">+12 heute</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Aktive Kampagnen</div>
+                            <div class="stat-change">3 geplant</div>
+                        </div>
+                    </section>
+
+                    <section class="live-section">
+                        <h2 class="section-title">
+                            <span class="live-indicator"></span>
+                            Aktive Outbound Kampagnen
+                        </h2>
+                        <div class="activity-feed">
+                            <div class="activity-item">
+                                <div class="activity-icon scheduling">📅</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Terminerinnerungen</div>
+                                    <div class="activity-subtitle">47 Patienten • Morgen 09:00-17:00</div>
+                                </div>
+                                <div class="activity-time">läuft</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon calling">📞</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Nachsorge Follow-up</div>
+                                    <div class="activity-subtitle">23 Patienten • Post-OP Kontrolle</div>
+                                </div>
+                                <div class="activity-time">läuft</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon waiting">⏳</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Vorsorgeuntersuchungen</div>
+                                    <div class="activity-subtitle">89 Patienten • Jahres-Checkup</div>
+                                </div>
+                                <div class="activity-time">geplant 15:00</div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            } else if (page === 'customization') {
+                main.innerHTML = `
+                    <section class="hero">
+                        <h1>Anpassungen</h1>
+                        <p>Konfiguriere deine KI-Assistentin für optimale Patientenkommunikation</p>
+                    </section>
+
+                    <section class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Aktive Vorlagen</div>
+                            <div class="stat-change">Gesprächsführung</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Sprachen</div>
+                            <div class="stat-change">DE, EN, FR, IT, ES</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Stimmen</div>
+                            <div class="stat-change">Weiblich, Männlich</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Verfügbarkeit</div>
+                            <div class="stat-change">Immer erreichbar</div>
+                        </div>
+                    </section>
+
+                    <section class="live-section">
+                        <h2 class="section-title">Konfiguration</h2>
+                        <div class="activity-feed">
+                            <div class="activity-item">
+                                <div class="activity-icon scheduling">⚙️</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Gesprächsvorlagen</div>
+                                    <div class="activity-subtitle">Begrüßung, Terminbestätigung, Absage</div>
+                                </div>
+                                <div class="activity-time">aktiv</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon calling">🎤</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Stimme & Sprache</div>
+                                    <div class="activity-subtitle">Natürlich, freundlich, professionell</div>
+                                </div>
+                                <div class="activity-time">konfiguriert</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon waiting">🕐</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Arbeitszeiten</div>
+                                    <div class="activity-subtitle">Mo-Fr 08:00-18:00, Sa 09:00-13:00</div>
+                                </div>
+                                <div class="activity-time">aktiv</div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            } else if (page === 'stats') {
+                main.innerHTML = `
+                    <section class="hero">
+                        <h1>Statistiken & Analytics</h1>
+                        <p>Detaillierte Einblicke in die Performance deiner Telefon-KI</p>
+                    </section>
+
+                    <section class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">1,247</div>
+                            <div class="stat-label">Anrufe diese Woche</div>
+                            <div class="stat-change">+18% vs. letzte Woche</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">96.2%</div>
+                            <div class="stat-label">Erfolgsquote</div>
+                            <div class="stat-change">+2.1% Verbesserung</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">1.8s</div>
+                            <div class="stat-label">Ø Antwortzeit</div>
+                            <div class="stat-change">-0.3s schneller</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">€2,340</div>
+                            <div class="stat-label">Kosteneinsparung</div>
+                            <div class="stat-change">vs. manuell</div>
+                        </div>
+                    </section>
+
+                    <section class="live-section">
+                        <h2 class="section-title">Performance Metriken</h2>
+                        <div class="activity-feed">
+                            <div class="activity-item">
+                                <div class="activity-icon scheduling">📊</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Anrufvolumen</div>
+                                    <div class="activity-subtitle">Peak: 14:00-16:00 • 89 Anrufe/Stunde</div>
+                                </div>
+                                <div class="activity-time">heute</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon calling">⭐</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Patientenzufriedenheit</div>
+                                    <div class="activity-subtitle">4.8/5 Sterne • 234 Bewertungen</div>
+                                </div>
+                                <div class="activity-time">diese Woche</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon waiting">💰</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">ROI</div>
+                                    <div class="activity-subtitle">340% Return on Investment</div>
+                                </div>
+                                <div class="activity-time">letzter Monat</div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
     </script>
 </body>
 </html>
