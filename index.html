@@ -442,6 +442,261 @@
             filter: blur(0px);
         }
 
+        /* Chart Styles */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .chart-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .chart-container {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Kreisdiagramm */
+        .pie-chart {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .donut {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .donut-segment {
+            transition: stroke-dasharray 2s ease-in-out;
+        }
+
+        .pie-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .pie-percentage {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .pie-label {
+            display: block;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        /* Balkendiagramm */
+        .bar-chart {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            height: 200px;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(to top, #00ff88, #00cc6a);
+            border-radius: 4px 4px 0 0;
+            transition: height 2s ease-in-out;
+            min-height: 2px;
+        }
+
+        .bar-label {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Sprachendiagramm */
+        .language-chart {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .language-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .language-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .language-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+            border-radius: 4px;
+            transition: width 2s ease-in-out;
+        }
+
+        .language-label {
+            min-width: 80px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .language-percentage {
+            min-width: 40px;
+            text-align: right;
+            font-weight: 600;
+            color: #00ff88;
+        }
+
+        /* Liniendiagramm */
+        .line-chart {
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+
+        .line-svg {
+            width: 100%;
+            height: 150px;
+        }
+
+        .line-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .line-area {
+            opacity: 0;
+        }
+
+        .line-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Metriken Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff88;
+            display: inline-block;
+        }
+
+        .metric-unit {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-left: 0.2rem;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        /* Automatisierung Chart */
+        .automation-chart {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .automation-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .automation-label {
+            min-width: 120px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .automation-bar {
+            flex: 1;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .automation-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+            border-radius: 6px;
+            transition: width 2s ease-in-out;
+        }
+
+        .automation-percentage {
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+            color: #00ff88;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .nav-container {
@@ -461,6 +716,10 @@
             }
 
             .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -931,30 +1190,195 @@
             if (page === 'dashboard') {
                 main.innerHTML = `
                     <section class="hero">
-                        <h1>Intelligente Terminverwaltung</h1>
-                        <p>KI ruft automatisch wartende Patienten an, sobald ein Termin frei wird – nahtlos und effizient</p>
+                        <h1>Telefon-KI Analytics</h1>
+                        <p>Intelligente Praxisführung durch KI-gesteuerte Patientenkommunikation</p>
                     </section>
 
-                    <section class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-number" id="activeCallsCount">3</div>
-                            <div class="stat-label">Aktive Anrufe</div>
-                            <div class="stat-change">+2 in letzten 5 Min</div>
+                    <section class="charts-grid">
+                        <!-- Erfolgsquote Kreisdiagramm -->
+                        <div class="chart-card animate-slide-up" style="animation-delay: 0.1s">
+                            <h3 class="chart-title">Erfolgsquote Terminvergabe</h3>
+                            <div class="chart-container">
+                                <div class="pie-chart" data-percentage="89">
+                                    <svg viewBox="0 0 42 42" class="donut">
+                                        <circle class="donut-hole" cx="21" cy="21" r="15.915" fill="transparent"></circle>
+                                        <circle class="donut-ring" cx="21" cy="21" r="15.915" fill="transparent" stroke="#333" stroke-width="3"></circle>
+                                        <circle class="donut-segment" cx="21" cy="21" r="15.915" fill="transparent" stroke="#00ff88" stroke-width="3" stroke-dasharray="0 100" stroke-dashoffset="25"></circle>
+                                    </svg>
+                                    <div class="pie-center">
+                                        <span class="pie-percentage">89%</span>
+                                        <span class="pie-label">Erfolg</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="waitingPatientsCount">17</div>
-                            <div class="stat-label">Wartende Patienten</div>
-                            <div class="stat-change">-5 heute vermittelt</div>
+
+                        <!-- Anrufe pro Stunde Balkendiagramm -->
+                        <div class="chart-card animate-slide-up" style="animation-delay: 0.2s">
+                            <h3 class="chart-title">Anrufe pro Stunde (heute)</h3>
+                            <div class="chart-container">
+                                <div class="bar-chart">
+                                    <div class="bar-item">
+                                        <div class="bar" data-height="45" style="height: 0%"></div>
+                                        <span class="bar-label">08:00</span>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar" data-height="78" style="height: 0%"></div>
+                                        <span class="bar-label">09:00</span>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar" data-height="92" style="height: 0%"></div>
+                                        <span class="bar-label">10:00</span>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar" data-height="67" style="height: 0%"></div>
+                                        <span class="bar-label">11:00</span>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar" data-height="89" style="height: 0%"></div>
+                                        <span class="bar-label">12:00</span>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar" data-height="34" style="height: 0%"></div>
+                                        <span class="bar-label">13:00</span>
+                                    </div>
+                                    <div class="bar-item">
+                                        <div class="bar" data-height="76" style="height: 0%"></div>
+                                        <span class="bar-label">14:00</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="filledSlotsCount">12</div>
-                            <div class="stat-label">Heute gefüllte Slots</div>
-                            <div class="stat-change">+8 vs. gestern</div>
+
+                        <!-- Sprachen Verteilung -->
+                        <div class="chart-card animate-slide-up" style="animation-delay: 0.3s">
+                            <h3 class="chart-title">Erkannte Sprachen</h3>
+                            <div class="chart-container">
+                                <div class="language-chart">
+                                    <div class="language-item">
+                                        <div class="language-bar">
+                                            <div class="language-fill" data-width="85" style="width: 0%"></div>
+                                        </div>
+                                        <span class="language-label">Deutsch</span>
+                                        <span class="language-percentage">85%</span>
+                                    </div>
+                                    <div class="language-item">
+                                        <div class="language-bar">
+                                            <div class="language-fill" data-width="8" style="width: 0%"></div>
+                                        </div>
+                                        <span class="language-label">Englisch</span>
+                                        <span class="language-percentage">8%</span>
+                                    </div>
+                                    <div class="language-item">
+                                        <div class="language-bar">
+                                            <div class="language-fill" data-width="4" style="width: 0%"></div>
+                                        </div>
+                                        <span class="language-label">Türkisch</span>
+                                        <span class="language-percentage">4%</span>
+                                    </div>
+                                    <div class="language-item">
+                                        <div class="language-bar">
+                                            <div class="language-fill" data-width="3" style="width: 0%"></div>
+                                        </div>
+                                        <span class="language-label">Sonstige</span>
+                                        <span class="language-percentage">3%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="successRateCount">94%</div>
-                            <div class="stat-label">Erfolgsquote</div>
-                            <div class="stat-change">+2% diese Woche</div>
+
+                        <!-- Wöchentliche Termine -->
+                        <div class="chart-card animate-slide-up" style="animation-delay: 0.4s">
+                            <h3 class="chart-title">Termine neu vergeben (7 Tage)</h3>
+                            <div class="chart-container">
+                                <div class="line-chart">
+                                    <svg viewBox="0 0 300 150" class="line-svg">
+                                        <defs>
+                                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.3" />
+                                                <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
+                                            </linearGradient>
+                                        </defs>
+                                        <polyline class="line-path" fill="none" stroke="#00ff88" stroke-width="2" points="0,120 50,95 100,80 150,70 200,85 250,60 300,45" stroke-dasharray="0,1000"></polyline>
+                                        <polygon class="line-area" fill="url(#lineGradient)" points="0,150 0,120 50,95 100,80 150,70 200,85 250,60 300,45 300,150" opacity="0"></polygon>
+                                    </svg>
+                                    <div class="line-labels">
+                                        <span>Mo</span>
+                                        <span>Di</span>
+                                        <span>Mi</span>
+                                        <span>Do</span>
+                                        <span>Fr</span>
+                                        <span>Sa</span>
+                                        <span>So</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KI Performance Metriken -->
+                        <div class="chart-card animate-slide-up" style="animation-delay: 0.5s">
+                            <h3 class="chart-title">KI Performance</h3>
+                            <div class="chart-container">
+                                <div class="metrics-grid">
+                                    <div class="metric-item">
+                                        <div class="metric-value" data-target="2.1">0</div>
+                                        <div class="metric-unit">s</div>
+                                        <div class="metric-label">Ø Antwortzeit</div>
+                                    </div>
+                                    <div class="metric-item">
+                                        <div class="metric-value" data-target="97.8">0</div>
+                                        <div class="metric-unit">%</div>
+                                        <div class="metric-label">Spracherkennung</div>
+                                    </div>
+                                    <div class="metric-item">
+                                        <div class="metric-value" data-target="94.2">0</div>
+                                        <div class="metric-unit">%</div>
+                                        <div class="metric-label">Intent Erkennung</div>
+                                    </div>
+                                    <div class="metric-item">
+                                        <div class="metric-value" data-target="1247">0</div>
+                                        <div class="metric-unit"></div>
+                                        <div class="metric-label">Anrufe heute</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Automatisierung Status -->
+                        <div class="chart-card animate-slide-up" style="animation-delay: 0.6s">
+                            <h3 class="chart-title">Automatisierungsgrad</h3>
+                            <div class="chart-container">
+                                <div class="automation-chart">
+                                    <div class="automation-item">
+                                        <div class="automation-label">Terminbuchung</div>
+                                        <div class="automation-bar">
+                                            <div class="automation-fill" data-width="92" style="width: 0%"></div>
+                                        </div>
+                                        <span class="automation-percentage">92%</span>
+                                    </div>
+                                    <div class="automation-item">
+                                        <div class="automation-label">Absagenbearbeitung</div>
+                                        <div class="automation-bar">
+                                            <div class="automation-fill" data-width="89" style="width: 0%"></div>
+                                        </div>
+                                        <span class="automation-percentage">89%</span>
+                                    </div>
+                                    <div class="automation-item">
+                                        <div class="automation-label">Erinnerungen</div>
+                                        <div class="automation-bar">
+                                            <div class="automation-fill" data-width="96" style="width: 0%"></div>
+                                        </div>
+                                        <span class="automation-percentage">96%</span>
+                                    </div>
+                                    <div class="automation-item">
+                                        <div class="automation-label">Nachfragen</div>
+                                        <div class="automation-bar">
+                                            <div class="automation-fill" data-width="78" style="width: 0%"></div>
+                                        </div>
+                                        <span class="automation-percentage">78%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -1039,8 +1463,9 @@
                     </section>
                 `;
                 
-                // Animate stats
+                // Animate stats and charts
                 animateAllStats();
+                startChartAnimations();
             } else if (page === 'outbound') {
                 main.innerHTML = `
                     <section class="hero animate-fade-in">
@@ -1228,6 +1653,75 @@
                 // Animate stats
                 animateAllStats();
             }
+        }
+        function startChartAnimations() {
+            // Kreisdiagramm Animation
+            setTimeout(() => {
+                const pieChart = document.querySelector('.pie-chart');
+                if (pieChart) {
+                    const percentage = pieChart.dataset.percentage;
+                    const circle = pieChart.querySelector('.donut-segment');
+                    const circumference = 2 * Math.PI * 15.915;
+                    const strokeDasharray = (percentage / 100) * circumference;
+                    circle.style.strokeDasharray = `${strokeDasharray} ${circumference}`;
+                }
+            }, 500);
+
+            // Balkendiagramm Animation
+            setTimeout(() => {
+                const bars = document.querySelectorAll('.bar');
+                bars.forEach((bar, index) => {
+                    setTimeout(() => {
+                        const height = bar.dataset.height;
+                        bar.style.height = height + '%';
+                    }, index * 200);
+                });
+            }, 800);
+
+            // Sprachendiagramm Animation
+            setTimeout(() => {
+                const languageFills = document.querySelectorAll('.language-fill');
+                languageFills.forEach((fill, index) => {
+                    setTimeout(() => {
+                        const width = fill.dataset.width;
+                        fill.style.width = width + '%';
+                    }, index * 300);
+                });
+            }, 1200);
+
+            // Liniendiagramm Animation
+            setTimeout(() => {
+                const linePath = document.querySelector('.line-path');
+                const lineArea = document.querySelector('.line-area');
+                if (linePath) {
+                    linePath.style.strokeDashoffset = '0';
+                    setTimeout(() => {
+                        if (lineArea) lineArea.style.opacity = '1';
+                    }, 1000);
+                }
+            }, 1500);
+
+            // Automatisierung Animation
+            setTimeout(() => {
+                const automationFills = document.querySelectorAll('.automation-fill');
+                automationFills.forEach((fill, index) => {
+                    setTimeout(() => {
+                        const width = fill.dataset.width;
+                        fill.style.width = width + '%';
+                    }, index * 200);
+                });
+            }, 2000);
+
+            // Metriken Counter Animation
+            setTimeout(() => {
+                const metricValues = document.querySelectorAll('.metric-value');
+                metricValues.forEach((value, index) => {
+                    setTimeout(() => {
+                        const target = parseFloat(value.dataset.target);
+                        animateCounter(value, target, 2000);
+                    }, index * 300);
+                });
+            }, 1500);
         }
     </script>
 </body>
