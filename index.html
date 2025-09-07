@@ -607,10 +607,12 @@
         .line-path {
             stroke-dasharray: 1000;
             stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 3s ease-in-out;
         }
 
         .line-area {
             opacity: 0;
+            transition: opacity 2s ease-in-out;
         }
 
         .line-labels {
@@ -1668,39 +1670,61 @@
                 }
             }, 500);
 
-            // Balkendiagramm Animation
+            // Balkendiagramm Animation - Verbessert
             setTimeout(() => {
-                const bars = document.querySelectorAll('.bar[data-height]');
-                console.log('Found bars:', bars.length); // Debug
-                bars.forEach((bar, index) => {
-                    setTimeout(() => {
-                        const height = bar.getAttribute('data-height');
-                        console.log(`Animating bar ${index}: ${height}%`); // Debug
-                        bar.style.height = height + '%';
-                    }, index * 150);
-                });
+                const barChart = document.querySelector('.bar-chart');
+                if (barChart) {
+                    const bars = barChart.querySelectorAll('.bar[data-height]');
+                    console.log('Found bars in bar-chart:', bars.length); // Debug
+                    bars.forEach((bar, index) => {
+                        setTimeout(() => {
+                            const height = bar.getAttribute('data-height');
+                            console.log(`Animating bar ${index}: ${height}%`); // Debug
+                            bar.style.height = height + '%';
+                            bar.style.transition = 'height 1.5s ease-in-out';
+                        }, index * 200);
+                    });
+                }
             }, 1000);
 
             // Sprachendiagramm Animation
             setTimeout(() => {
-                const languageFills = document.querySelectorAll('.language-fill');
-                languageFills.forEach((fill, index) => {
-                    setTimeout(() => {
-                        const width = fill.dataset.width;
-                        fill.style.width = width + '%';
-                    }, index * 300);
-                });
+                const languageChart = document.querySelector('.language-chart');
+                if (languageChart) {
+                    const languageFills = languageChart.querySelectorAll('.language-fill[data-width]');
+                    languageFills.forEach((fill, index) => {
+                        setTimeout(() => {
+                            const width = fill.getAttribute('data-width');
+                            fill.style.width = width + '%';
+                        }, index * 300);
+                    });
+                }
             }, 1200);
 
-            // Liniendiagramm Animation
+            // Liniendiagramm Animation - Verbessert
             setTimeout(() => {
-                const linePath = document.querySelector('.line-path');
-                const lineArea = document.querySelector('.line-area');
-                if (linePath) {
-                    linePath.style.strokeDashoffset = '0';
-                    setTimeout(() => {
-                        if (lineArea) lineArea.style.opacity = '1';
-                    }, 1000);
+                const lineChart = document.querySelector('.line-chart');
+                if (lineChart) {
+                    const linePath = lineChart.querySelector('.line-path');
+                    const lineArea = lineChart.querySelector('.line-area');
+                    console.log('Found line elements:', !!linePath, !!lineArea); // Debug
+                    
+                    if (linePath) {
+                        // Berechne die tatsächliche Pfad-Länge
+                        const pathLength = linePath.getTotalLength();
+                        linePath.style.strokeDasharray = pathLength;
+                        linePath.style.strokeDashoffset = pathLength;
+                        
+                        // Animiere die Linie
+                        setTimeout(() => {
+                            linePath.style.strokeDashoffset = '0';
+                        }, 100);
+                        
+                        // Animiere die Fläche nach der Linie
+                        setTimeout(() => {
+                            if (lineArea) lineArea.style.opacity = '1';
+                        }, 2000);
+                    }
                 }
             }, 1500);
 
