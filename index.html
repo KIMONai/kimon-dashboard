@@ -1222,31 +1222,31 @@
                             <div class="chart-container">
                                 <div class="bar-chart">
                                     <div class="bar-item">
-                                        <div class="bar" data-height="45" style="height: 0%"></div>
+                                        <div class="bar" data-height="45"></div>
                                         <span class="bar-label">08:00</span>
                                     </div>
                                     <div class="bar-item">
-                                        <div class="bar" data-height="78" style="height: 0%"></div>
+                                        <div class="bar" data-height="78"></div>
                                         <span class="bar-label">09:00</span>
                                     </div>
                                     <div class="bar-item">
-                                        <div class="bar" data-height="92" style="height: 0%"></div>
+                                        <div class="bar" data-height="92"></div>
                                         <span class="bar-label">10:00</span>
                                     </div>
                                     <div class="bar-item">
-                                        <div class="bar" data-height="67" style="height: 0%"></div>
+                                        <div class="bar" data-height="67"></div>
                                         <span class="bar-label">11:00</span>
                                     </div>
                                     <div class="bar-item">
-                                        <div class="bar" data-height="89" style="height: 0%"></div>
+                                        <div class="bar" data-height="89"></div>
                                         <span class="bar-label">12:00</span>
                                     </div>
                                     <div class="bar-item">
-                                        <div class="bar" data-height="34" style="height: 0%"></div>
+                                        <div class="bar" data-height="34"></div>
                                         <span class="bar-label">13:00</span>
                                     </div>
                                     <div class="bar-item">
-                                        <div class="bar" data-height="76" style="height: 0%"></div>
+                                        <div class="bar" data-height="76"></div>
                                         <span class="bar-label">14:00</span>
                                     </div>
                                 </div>
@@ -1680,22 +1680,29 @@
                 }
             }, 500);
 
-            // Balkendiagramm Animation - Verbessert
+            // Balkendiagramm Animation - Komplett neu
             setTimeout(() => {
                 const barChart = document.querySelector('.bar-chart');
                 if (barChart) {
                     const bars = barChart.querySelectorAll('.bar[data-height]');
                     console.log('Found bars in bar-chart:', bars.length); // Debug
+                    
+                    // Setze alle Balken initial auf 0%
+                    bars.forEach((bar) => {
+                        bar.style.height = '0%';
+                        bar.style.transition = 'height 1.5s ease-in-out';
+                    });
+                    
+                    // Animiere jeden Balken nacheinander
                     bars.forEach((bar, index) => {
                         setTimeout(() => {
                             const height = bar.getAttribute('data-height');
                             console.log(`Animating bar ${index}: ${height}%`); // Debug
                             bar.style.height = height + '%';
-                            bar.style.transition = 'height 1.5s ease-in-out';
                         }, index * 200);
                     });
                 }
-            }, 1000);
+            }, 1200);
 
             // Sprachendiagramm Animation
             setTimeout(() => {
