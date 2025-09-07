@@ -647,6 +647,17 @@
             });
         }
 
+        // Blur phone number after +49
+        function blurPhoneNumber(phoneNumber) {
+            if (phoneNumber.startsWith('+49')) {
+                const prefix = '+49';
+                const rest = phoneNumber.substring(3);
+                const blurred = rest.replace(/./g, '●');
+                return `${prefix}<span class="phone-blur">${blurred}</span>`;
+            }
+            return phoneNumber;
+        }
+
         function updateStats() {
             // Simulate live stat updates
             const stats = {
@@ -701,17 +712,6 @@
                 { status: 'busy', statusText: 'Mailbox', icon: '◐', conversation: 'Nachricht hinterlassen. Patient wird zurückrufen.' }
             ];
 
-            // Blur phone number after +49
-            function blurPhoneNumber(phoneNumber) {
-                if (phoneNumber.startsWith('+49')) {
-                    const prefix = '+49';
-                    const rest = phoneNumber.substring(3);
-                    const blurred = rest.replace(/./g, '●');
-                    return `${prefix}<span class="phone-blur">${blurred}</span>`;
-                }
-                return phoneNumber;
-            }
-
             const outboundCalls = [];
             for (let i = 0; i < 30; i++) {
                 const statusOption = statusOptions[Math.floor(Math.random() * statusOptions.length)];
@@ -726,7 +726,10 @@
             }
 
             const feed = document.getElementById('outboundFeed');
-            if (!feed) return;
+            if (!feed) {
+                console.log('outboundFeed element not found');
+                return;
+            }
 
             // Füge Anrufe mit schnelleren zeitlichen Abständen hinzu
             outboundCalls.forEach((call, index) => {
@@ -817,6 +820,16 @@
         setInterval(addActivity, 8000); // New activity every 8 seconds
         setInterval(updateStats, 12000); // Update stats every 12 seconds
         setInterval(updateTimeStamps, 60000); // Update timestamps every minute
+        
+        // Check if Outbound is active on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeNav = document.querySelector('.nav-item.active');
+            if (activeNav && activeNav.textContent.toLowerCase() === 'outbound') {
+                setTimeout(() => {
+                    startOutboundAnimations();
+                }, 1600);
+            }
+        });
 
         // Navigation
         document.querySelectorAll('.nav-item').forEach(item => {
@@ -1008,7 +1021,7 @@
                 // Starte Outbound-Animationen
                 setTimeout(() => {
                     startOutboundAnimations();
-                }, 1600);
+                }, 100); // Reduziert für schnelleren Start
             } else if (page === 'customization') {
                 main.innerHTML = `
                     <section class="hero">
