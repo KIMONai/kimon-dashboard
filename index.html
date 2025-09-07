@@ -656,71 +656,62 @@
 
         // Outbound Animations
         function startOutboundAnimations() {
-            const outboundCalls = [
-                {
-                    name: 'Anna Weber',
-                    phone: '+49 30 1234567',
-                    status: 'calling',
-                    statusText: 'Anruf läuft',
-                    conversation: null,
-                    icon: '📞'
-                },
-                {
-                    name: 'Klaus Richter',
-                    phone: '+49 160 9876543',
-                    status: 'success',
-                    statusText: 'Termin bestätigt',
-                    conversation: 'Termin für Donnerstag 14:30 bestätigt. Patient freut sich auf den Termin.',
-                    icon: '✅'
-                },
-                {
-                    name: 'Maria Schmidt',
-                    phone: '+49 221 5554321',
-                    status: 'busy',
-                    statusText: 'Besetzt',
-                    conversation: 'Mailbox erreicht. Rückruf in 30 Minuten geplant.',
-                    icon: '📵'
-                },
-                {
-                    name: 'Thomas Klein',
-                    phone: '+49 89 7778888',
-                    status: 'no-answer',
-                    statusText: 'Nicht erreicht',
-                    conversation: 'Kein Anschluss unter dieser Nummer. Alternative Nummer wird gesucht.',
-                    icon: '❌'
-                },
-                {
-                    name: 'Sarah Becker',
-                    phone: '+49 40 3332222',
-                    status: 'success',
-                    statusText: 'Termin verschoben',
-                    conversation: 'Termin von Dienstag auf Freitag 10:00 verschoben. Bestätigung erhalten.',
-                    icon: '📅'
-                },
-                {
-                    name: 'Michael Wagner',
-                    phone: '+49 711 9998877',
-                    status: 'calling',
-                    statusText: 'Verbindung wird aufgebaut',
-                    conversation: null,
-                    icon: '📞'
-                }
+            const names = [
+                'Anna Weber', 'Klaus Richter', 'Maria Schmidt', 'Thomas Klein', 'Sarah Becker',
+                'Michael Wagner', 'Lisa Hoffmann', 'Peter Schulz', 'Julia Meier', 'Stefan Braun',
+                'Nicole Fischer', 'Martin Koch', 'Sandra Wolf', 'Daniel Richter', 'Petra Neumann',
+                'Andreas Seidel', 'Sabine Krüger', 'Markus Lehmann', 'Claudia Bauer', 'Jörg Zimmermann',
+                'Monika Hartmann', 'Ralf Schmitt', 'Birgit Lange', 'Uwe Köhler', 'Ingrid Scholz',
+                'Frank Möller', 'Karin Winkler', 'Dirk Krause', 'Heike Schröder', 'Torsten Huber'
             ];
+
+            const phoneNumbers = [
+                '+49 30 1234567', '+49 160 9876543', '+49 221 5554321', '+49 89 7778888', '+49 40 3332222',
+                '+49 711 9998877', '+49 69 1112233', '+49 201 4445566', '+49 511 7778899', '+49 351 2223344',
+                '+49 421 5556677', '+49 231 8889900', '+49 341 1234567', '+49 521 9876543', '+49 611 5554321',
+                '+49 721 7778888', '+49 821 3332222', '+49 931 9998877', '+49 621 1112233', '+49 541 4445566',
+                '+49 431 7778899', '+49 381 2223344', '+49 471 5556677', '+49 561 8889900', '+49 681 1234567',
+                '+49 781 9876543', '+49 881 5554321', '+49 981 7778888', '+49 371 3332222', '+49 461 9998877'
+            ];
+
+            const statusOptions = [
+                { status: 'calling', statusText: 'Anruf läuft', icon: '📞', conversation: null },
+                { status: 'calling', statusText: 'Verbindung wird aufgebaut', icon: '📞', conversation: null },
+                { status: 'success', statusText: 'Termin bestätigt', icon: '✅', conversation: 'Termin für morgen 14:30 bestätigt. Patient freut sich.' },
+                { status: 'success', statusText: 'Termin verschoben', icon: '📅', conversation: 'Termin auf nächste Woche verschoben. Bestätigung erhalten.' },
+                { status: 'success', statusText: 'Rückruf vereinbart', icon: '🔄', conversation: 'Patient ruft morgen um 10:00 zurück für Terminabsprache.' },
+                { status: 'busy', statusText: 'Besetzt', icon: '📵', conversation: 'Mailbox erreicht. Automatischer Rückruf in 1 Stunde.' },
+                { status: 'busy', statusText: 'Mailbox', icon: '📧', conversation: 'Nachricht hinterlassen. Patient wird zurückrufen.' },
+                { status: 'no-answer', statusText: 'Nicht erreicht', icon: '❌', conversation: 'Kein Anschluss. Alternative Nummer wird gesucht.' }
+            ];
+
+            const outboundCalls = [];
+            for (let i = 0; i < 30; i++) {
+                const statusOption = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+                outboundCalls.push({
+                    name: names[i],
+                    phone: phoneNumbers[i],
+                    status: statusOption.status,
+                    statusText: statusOption.statusText,
+                    conversation: statusOption.conversation,
+                    icon: statusOption.icon
+                });
+            }
 
             const feed = document.getElementById('outboundFeed');
             if (!feed) return;
 
-            // Füge Anrufe mit zeitlichen Abständen hinzu
+            // Füge Anrufe mit schnelleren zeitlichen Abständen hinzu
             outboundCalls.forEach((call, index) => {
                 setTimeout(() => {
                     addOutboundCall(call, feed);
-                }, index * 800); // 800ms Abstand zwischen Anrufen
+                }, index * 300); // 300ms Abstand zwischen Anrufen (schneller)
             });
 
-            // Simuliere Status-Updates
+            // Simuliere Status-Updates für laufende Anrufe
             setTimeout(() => {
                 updateCallStatus();
-            }, 5000);
+            }, 3000); // Früher starten
         }
 
         function addOutboundCall(call, feed) {
@@ -738,8 +729,8 @@
             
             feed.appendChild(item);
 
-            // Entferne alte Items (max 8)
-            while (feed.children.length > 8) {
+            // Entferne alte Items (max 12 für bessere Übersicht)
+            while (feed.children.length > 12) {
                 feed.removeChild(feed.firstChild);
             }
         }
